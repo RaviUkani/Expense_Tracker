@@ -1,10 +1,15 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import ExpenseForm from "./components/ExpenseForm"
 import ExpenseList from "./components/ExpenseList"
 
 function App() {
-  const [expenses, setExpenses] = useState([])
+  const [expenses, setExpenses] = useState(() =>{
+    return JSON.parse(localStorage.getItem("expenses")) || [];
+  });
 
+    useEffect(() =>{
+      localStorage.setItem("expenses", JSON.stringify(expenses));
+    }, [expenses]);
   const addExpense = (expense) =>{
     setExpenses([...expenses, expense])
   }
